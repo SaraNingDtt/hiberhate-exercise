@@ -11,9 +11,13 @@ import java.sql.SQLException;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class CommonUtil {
 //	
@@ -23,6 +27,13 @@ public class CommonUtil {
 //		}
 //		return DATASOURCE.getConnection();
 //	}
+	
+	
+	public static <T> T getBean(ServletContext sc, Class<T> clazz) {
+        ApplicationContext context = 
+            WebApplicationContextUtils.getWebApplicationContext(sc);
+        return context.getBean(clazz);
+    }
 
 	public static <P> P json2Pojo(HttpServletRequest request, Class<P> classOfPojo) {
 		try (BufferedReader br = request.getReader()) {
